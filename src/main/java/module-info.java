@@ -6,7 +6,11 @@ module com.app.freegamesapi {
     requires com.dlsc.formsfx;
     requires net.synedra.validatorfx;
     requires org.kordamp.bootstrapfx.core;
+    requires com.google.gson;
+    requires java.net.http;
 
     opens com.app.freegamesapi to javafx.fxml;
     exports com.app.freegamesapi;
+    opens com.app.freegamesapi.Controllers to javafx.fxml;
+    exports com.app.freegamesapi.Controllers to javafx.fxml;
 }
