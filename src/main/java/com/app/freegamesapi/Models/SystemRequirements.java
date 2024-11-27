@@ -1,6 +1,6 @@
 package com.app.freegamesapi.Models;
 
-public class SystemRequirement {
+public class SystemRequirements {
 
     // Fields
     private String os;
@@ -10,7 +10,7 @@ public class SystemRequirement {
     private String storage;
 
     // Constructor
-    public SystemRequirement(String os, String processor, String memory, String graphics, String storage) {
+    public SystemRequirements(String os, String processor, String memory, String graphics, String storage) {
         this.os = os;
         this.processor = processor;
         this.memory = memory;

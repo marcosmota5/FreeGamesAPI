@@ -1,7 +1,11 @@
 package com.app.freegamesapi.Controllers;
 
+import com.app.freegamesapi.Helpers.AppPreferences;
+import com.app.freegamesapi.Helpers.SceneUtils;
+import com.app.freegamesapi.Helpers.ThemeUtils;
 import com.app.freegamesapi.Models.Game;
 import com.google.gson.JsonObject;
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,9 +24,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import org.controlsfx.control.CheckComboBox;
 
 import java.awt.*;
+import java.io.IOException;
 import java.net.URI;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -30,7 +37,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+
+import static com.app.freegamesapi.Helpers.LinkUtils.openLink;
+
 public class HomeController {
+
+    @FXML
+    private AnchorPane anpHome;
 
     @FXML
     private Button btnDetails;
@@ -46,6 +59,9 @@ public class HomeController {
 
     @FXML
     private ComboBox<String> cmbSortBy;
+
+    @FXML
+    private ComboBox<String> cmbTheme;
 
     @FXML
     private Hyperlink hlkLinkedIn;
@@ -95,6 +111,8 @@ public class HomeController {
     @FXML
     private Label lblFetchingGameList;
 
+    private int selectedGameId;
+
     @FXML
     public void initialize() {
         // Call the method to populate the lists
@@ -112,6 +130,7 @@ public class HomeController {
         lsvGames.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) { // Check if something is selected
                 // Update the values from the selected game
+                selectedGameId = newValue.getId();
                 lblTitle.setText(newValue.getTitle());
                 lblDescription.setText("                           " + newValue.getShortDescription());
                 lblGenre.setText(newValue.getGenre());
@@ -130,7 +149,11 @@ public class HomeController {
                 Image newImage = new Image(newValue.getThumbnail());
 
                 imgThumbnail.setImage(newImage);
+
+                // Enable the details button
+                btnDetails.setDisable(false);
             } else {
+                selectedGameId = 0;
                 lblTitle.setText(""); // Clear the label if no selection is made
                 lblDescription.setText(""); // Clear the label if no selection is made
                 lblGenre.setText(""); // Clear the label if no selection is made
@@ -144,11 +167,30 @@ public class HomeController {
                 Image newImage = new Image(getClass().getResource("/no-image.png").toExternalForm());
 
                 imgThumbnail.setImage(newImage);
+
+                // Disable the details button as there's nothing to check
+                btnDetails.setDisable(true);
             }
         });
 
         // Call the refresh list method
         refreshList(null);
+
+        // Load the saved login from preferences and display it
+        String[] preferences = AppPreferences.loadPreferences();
+
+        // Set the initial theme
+        cmbTheme.setValue(preferences[0]);
+
+        // Call the method to set the theme
+        ThemeUtils.changeTheme(this, cmbTheme.getValue());
+
+        // Add a listener to detect when the selection changes
+        cmbTheme.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) { // Ensure a valid selection
+                ThemeUtils.changeTheme(this, newValue); // Call the changeTheme method with the selected value
+            }
+        });
     }
 
     @FXML
@@ -216,26 +258,34 @@ public class HomeController {
         ObservableList<String> categoryList = FXCollections.observableArrayList("2D", "3D", "Action", "Action RPG", "Anime", "Battle Royale", "Card", "Fantasy", "Fighting", "First Person", "Flight", "Horror", "Low Spec", "Martial Arts", "Military", "MMO", "MMOFPS", "MMORPG", "MMORTS", "MMOTPS", "Moba", "Open World", "Permadeath", "Pixel", "PVE", "PVP", "Racing", "Sailing", "Sandbox", "Sci Fi", "Shooter", "Side Scroller", "Social", "Space", "Sports", "Strategy", "Superhero", "Survival", "Tank", "Third Person", "Top Down", "Tower Defense", "Turn Based", "Voxel", "Zombie");
         ObservableList<String> platformList = FXCollections.observableArrayList("", "Browser", "PC");
         ObservableList<String> sortByList = FXCollections.observableArrayList("", "Alphabetical", "Release Date");
+        ObservableList<String> themeList = FXCollections.observableArrayList("Light", "Dark");
 
         // Set the lists
         ccbCategory.getItems().addAll(categoryList);
         cmbPlatform.setItems(platformList);
         cmbSortBy.setItems(sortByList);
+        cmbTheme.setItems(themeList);
     }
 
-    private void openLink(String url) {
-        try {
-            // Check if Desktop is supported
-            if (Desktop.isDesktopSupported()) {
-                Desktop desktop = Desktop.getDesktop();
-                if (desktop.isSupported(Desktop.Action.BROWSE)) {
-                    desktop.browse(new URI(url));
-                }
-            } else {
-                System.err.println("Desktop is not supported. Cannot open the link.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    @FXML
+    void goToDetails(ActionEvent event) throws IOException {
+        // If the selected game id is 0, return as there's no game to check
+        if (selectedGameId == 0) {
+            return;
+        }
+
+        // Get the stage from anchor
+        Stage stage = (Stage)anpHome.getScene().getWindow();
+
+        // Switch the scene
+        SceneUtils.switchScene(anpHome, "game-details-view.fxml", selectedGameId);
+    }
+
+    private void changeTheme(String theme){
+        if (theme.equals("Dark")) {
+            Application.setUserAgentStylesheet(getClass().getResource("/primer-dark.css").toExternalForm());
+        } else {
+            Application.setUserAgentStylesheet(getClass().getResource("/primer-light.css").toExternalForm());
         }
     }
 }

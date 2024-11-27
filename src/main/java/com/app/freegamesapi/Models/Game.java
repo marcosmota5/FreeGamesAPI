@@ -30,14 +30,14 @@ public class Game {
     private String developer;
     private LocalDate releaseDate;
     private String freeToGameProfileUrl;
-    List<SystemRequirement> systemRequirements;
+    private SystemRequirements systemRequirements;
     List<String> screenshots;
 
     // Constructors
     public Game(int id, String title, String thumbnail, String status, String shortDescription,
                 String description, String gameUrl, String genre, String platform,
                 String publisher, String developer, LocalDate releaseDate,
-                String freeToGameProfileUrl, List<SystemRequirement> systemRequirements,
+                String freeToGameProfileUrl, SystemRequirements systemRequirements,
                 List<String> screenshots) {
         this.id = id;
         this.title = title;
@@ -178,11 +178,11 @@ public class Game {
         this.freeToGameProfileUrl = freeToGameProfileUrl;
     }
 
-    public List<SystemRequirement> getSystemRequirements() {
+    public SystemRequirements getSystemRequirements() {
         return systemRequirements;
     }
 
-    public void setSystemRequirements(List<SystemRequirement> systemRequirements) {
+    public void setSystemRequirements(SystemRequirements systemRequirements) {
         this.systemRequirements = systemRequirements;
     }
 
@@ -222,7 +222,7 @@ public class Game {
                                 : null;
 
                         // Create the system requirement object and set the properties if they have value
-                        SystemRequirement systemRequirement = new SystemRequirement(
+                        SystemRequirements systemRequirements = new SystemRequirements(
                                 systemRequirementsJson != null && systemRequirementsJson.has("os") ? systemRequirementsJson.get("os").getAsString() : "",
                                 systemRequirementsJson != null && systemRequirementsJson.has("processor") ? systemRequirementsJson.get("processor").getAsString() : "",
                                 systemRequirementsJson != null && systemRequirementsJson.has("memory") ? systemRequirementsJson.get("memory").getAsString() : "",
@@ -257,7 +257,7 @@ public class Game {
                                 gameObject.get("developer").getAsString(),
                                 LocalDate.parse(gameObject.get("release_date").getAsString().replace("00", "01")),
                                 gameObject.get("freetogame_profile_url").getAsString(),
-                                List.of(systemRequirement),
+                                systemRequirements,
                                 screenshots
                         );
                     } catch (Exception e) {

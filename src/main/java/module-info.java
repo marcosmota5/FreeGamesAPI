@@ -9,6 +9,7 @@ module com.app.freegamesapi {
     requires com.google.gson;
     requires java.net.http;
     requires java.desktop;
+    requires java.prefs;
 
     opens com.app.freegamesapi to javafx.fxml;
     exports com.app.freegamesapi;

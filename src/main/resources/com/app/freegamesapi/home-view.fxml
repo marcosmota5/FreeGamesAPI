@@ -14,12 +14,11 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.CheckComboBox?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1280.0" stylesheets="@../../../primer-light.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.freegamesapi.Controllers.HomeController">
+<AnchorPane fx:id="anpHome" prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.freegamesapi.Controllers.HomeController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="637.0" layoutX="851.0" layoutY="91.0" stroke="#d0d7de" strokeType="INSIDE" width="415.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="167.0" layoutX="20.0" layoutY="92.0" stroke="#d0d7de" strokeType="INSIDE" width="817.0" />
-      <Hyperlink fx:id="hlkSource" layoutX="1104.0" layoutY="732.0" text="Source: FreeToGame.com" />
-      <ListView fx:id="lsvGames" layoutX="20.0" layoutY="293.0" prefHeight="436.0" prefWidth="817.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="620.0" layoutX="851.0" layoutY="91.0" stroke="#d0d7de" strokeType="INSIDE" width="415.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="167.0" layoutX="20.0" layoutY="92.0" stroke="#d0d7de" strokeType="INSIDE" width="817.0" />
+      <ListView fx:id="lsvGames" layoutX="20.0" layoutY="293.0" prefHeight="416.0" prefWidth="817.0" style="-fx-border-color: #d0d7de;" />
       <ImageView fitHeight="36.0" fitWidth="38.0" layoutX="14.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../app-icon.png" />
@@ -30,12 +29,24 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Label layoutX="30.0" layoutY="106.0" text="Category" />
-      <Label layoutX="410.0" layoutY="106.0" text="Platform" />
+      <Label layoutX="30.0" layoutY="106.0" text="Category">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label layoutX="410.0" layoutY="106.0" text="Platform">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
       <ComboBox fx:id="cmbPlatform" layoutX="410.0" layoutY="126.0" prefHeight="46.0" prefWidth="231.0" />
-      <Label layoutX="651.0" layoutY="106.0" text="Sort by" />
+      <Label layoutX="651.0" layoutY="106.0" text="Sort by">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
       <ComboBox fx:id="cmbSortBy" layoutX="651.0" layoutY="126.0" prefHeight="46.0" prefWidth="176.0" />
-      <Label layoutX="30.0" layoutY="180.0" text="Name" />
+      <Label layoutX="30.0" layoutY="180.0" text="Name">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
       <TextField fx:id="txtName" layoutX="30.0" layoutY="200.0" prefHeight="46.0" prefWidth="612.0" />
       <Button fx:id="btnRefresh" layoutX="651.0" layoutY="200.0" mnemonicParsing="false" onAction="#refreshList" prefHeight="46.0" prefWidth="176.0" text="Refresh">
          <graphic>
@@ -45,8 +56,11 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <Label layoutX="20.0" layoutY="272.0" text="Game List" />
-      <AnchorPane layoutX="859.0" layoutY="98.0" prefHeight="620.0" prefWidth="399.0">
+      <Label layoutX="20.0" layoutY="272.0" text="Game List">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <AnchorPane layoutX="859.0" layoutY="98.0" prefHeight="607.0" prefWidth="399.0">
          <children>
             <ImageView fx:id="imgThumbnail" fitHeight="220.0" fitWidth="390.0" layoutX="5.0" layoutY="52.0" pickOnBounds="true">
                <image>
@@ -62,7 +76,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
-            <Button fx:id="btnDetails" layoutX="296.0" layoutY="584.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="103.0" text="Details">
+            <Button fx:id="btnDetails" disable="true" layoutX="292.0" layoutY="563.0" mnemonicParsing="false" onAction="#goToDetails" prefHeight="36.0" prefWidth="103.0" text="Details">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -137,12 +151,25 @@
             </Hyperlink>
          </children>
       </AnchorPane>
-      <Label layoutX="20.0" layoutY="71.0" text="Options" />
-      <Label layoutX="851.0" layoutY="71.0" text="Selected game info" />
+      <Label layoutX="20.0" layoutY="71.0" text="Filters">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label layoutX="851.0" layoutY="71.0" text="Selected game info">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
       <CheckComboBox fx:id="ccbCategory" layoutX="30.0" layoutY="126.0" prefHeight="46.0" prefWidth="370.0" />
-      <Hyperlink fx:id="hlkLinkedIn" layoutX="15.0" layoutY="732.0" text="Created by Marcos Mota" />
-      <Hyperlink fx:id="hlkRepository" layoutX="191.0" layoutY="732.0" text="Repository: FreeGamesAPI" />
       <ProgressIndicator fx:id="pgiFetchingGameList" layoutX="391.0" layoutY="458.0" prefHeight="61.0" prefWidth="68.0" visible="false" />
       <Label fx:id="lblFetchingGameList" layoutX="357.0" layoutY="518.0" prefHeight="46.0" prefWidth="119.0" text="Fetching game list, please wait...." textAlignment="CENTER" visible="false" wrapText="true" />
+      <Hyperlink fx:id="hlkSource" layoutX="375.0" layoutY="725.0" text="API Source: FreeToGame.com" />
+      <Hyperlink fx:id="hlkLinkedIn" layoutX="16.0" layoutY="725.0" text="Created by Marcos Mota" />
+      <Hyperlink fx:id="hlkRepository" layoutX="192.0" layoutY="725.0" text="Repository: FreeGamesAPI" />
+      <Label layoutX="1080.0" layoutY="729.0" text="Theme:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="cmbTheme" layoutX="1130.0" layoutY="720.0" prefHeight="36.0" prefWidth="136.0" />
    </children>
 </AnchorPane>
