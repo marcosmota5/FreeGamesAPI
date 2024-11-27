@@ -19,6 +19,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.control.ProgressIndicator;
 import org.controlsfx.control.CheckComboBox;
 
 import java.awt.*;
@@ -89,9 +90,18 @@ public class HomeController {
     private TextField txtName;
 
     @FXML
+    private ProgressIndicator pgiFetchingGameList;
+
+    @FXML
+    private Label lblFetchingGameList;
+
+    @FXML
     public void initialize() {
         // Call the method to populate the lists
         populateLists();
+
+        // Set a standard selection for the sort by
+        cmbSortBy.setValue("Alphabetical");
 
         // Set the actions for hyperlinks
         hlkLinkedIn.setOnAction(event -> openLink("https://linkedin.com/in/marcosmota5"));
@@ -137,11 +147,15 @@ public class HomeController {
             }
         });
 
+        // Call the refresh list method
         refreshList(null);
     }
 
     @FXML
     void refreshList(ActionEvent event) {
+
+        // Clear the list
+        lsvGames.getItems().clear();
 
         // Get selected items from CheckComboBox (categories)
         List<String> categories = ccbCategory.getCheckModel().getCheckedItems();
@@ -154,27 +168,52 @@ public class HomeController {
         String sortBy = cmbSortBy.getSelectionModel().getSelectedItem();
         sortBy = (sortBy != null) ? sortBy : ""; // Default to empty string if no selection
 
+        // Show progress and disable buttons immediately
+        Platform.runLater(() -> {
+            pgiFetchingGameList.setVisible(true);
+            lblFetchingGameList.setVisible(true);
+
+            btnRefresh.setDisable(true);
+            btnDetails.setDisable(true);
+        });
+
         // Call the asynchronous method and handle results
         Game.getGameList(categories, platform, sortBy, txtName.getText())
                 .thenAccept(games -> {
                     // Update the ListView on the JavaFX Application Thread
                     Platform.runLater(() -> {
-                        lsvGames.getItems().setAll(games); // Populate the ListView with the game list
+
+                        // Populate the ListView with the game list
+                        lsvGames.getItems().setAll(games);
+
+                        // Make the progress invisible
+                        pgiFetchingGameList.setVisible(false);
+                        lblFetchingGameList.setVisible(false);
+
+                        // Enable the buttons
+                        btnRefresh.setDisable(false);
+                        btnDetails.setDisable(false);
                     });
                 })
                 .exceptionally(ex -> {
                     // Handle exceptions
                     Platform.runLater(() -> {
                         System.err.println("Error fetching game list: " + ex.getMessage());
+
+                        // Make the progress invisible and re-enable buttons
+                        pgiFetchingGameList.setVisible(false);
+                        lblFetchingGameList.setVisible(false);
+
+                        btnRefresh.setDisable(false);
+                        btnDetails.setDisable(false);
                     });
                     return null;
                 });
-
     }
 
     private void populateLists() {
         // Create the lists
-        ObservableList<String> categoryList = FXCollections.observableArrayList("MMORPG", "Shooter", "Strategy", "Moba", "Racing", "Sports", "Social", "Sandbox", "Open World", "Survival", "PVP", "PVE", "Pixel", "Voxel", "Zombie", "Turn Based", "First Person", "Third Person", "Top Down", "Tank", "Space", "Sailing", "Side Scroller", "Superhero", "Permadeath", "Card", "Battle Royale", "MMO", "MMOFPS", "MMOTPS", "3D", "2D", "Anime", "Fantasy", "Sci Fi", "Fighting", "Action RPG", "Action", "Military", "Martial Arts", "Flight", "Low Spec", "Tower Defense", "Horror", "MMORTS");
+        ObservableList<String> categoryList = FXCollections.observableArrayList("2D", "3D", "Action", "Action RPG", "Anime", "Battle Royale", "Card", "Fantasy", "Fighting", "First Person", "Flight", "Horror", "Low Spec", "Martial Arts", "Military", "MMO", "MMOFPS", "MMORPG", "MMORTS", "MMOTPS", "Moba", "Open World", "Permadeath", "Pixel", "PVE", "PVP", "Racing", "Sailing", "Sandbox", "Sci Fi", "Shooter", "Side Scroller", "Social", "Space", "Sports", "Strategy", "Superhero", "Survival", "Tank", "Third Person", "Top Down", "Tower Defense", "Turn Based", "Voxel", "Zombie");
         ObservableList<String> platformList = FXCollections.observableArrayList("", "Browser", "PC");
         ObservableList<String> sortByList = FXCollections.observableArrayList("", "Alphabetical", "Release Date");
 

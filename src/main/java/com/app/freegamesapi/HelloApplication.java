@@ -15,8 +15,7 @@ public class HelloApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 1280, 768);
         stage.setTitle("Free Games API");
 
-
-        // Set the icon for the application (assuming the icon is in the resources folder)
+        // Set the icon for the application
         Image icon = new Image(HelloApplication.class.getResourceAsStream("/app-icon.png"));
         stage.getIcons().add(icon);
 
