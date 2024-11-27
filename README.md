@@ -38,7 +38,7 @@ Check my <a href="https://github.com/marcosmota5" title="Profile">profile</a> fo
 
 ## Other
 
-A bit thanks to <a href="https://www.freetogame.com/" title="Free to game">FreeToGame</a> for providing the free API that is used throgout this entire application.
+A bit thanks to <a href="https://www.freetogame.com/" title="Free to game">FreeToGame</a> for providing the free API that is used throughout this entire application.
 
 Thanks to <a href="https://www.flaticon.com/" title="Flaticon">Flaticon</a> for providing for free so many amazing images. Every single icon in this project comes from Flaticon, so all icon rights are reserved to it. Below is the list of images from FlatIcon used in this app.
 
