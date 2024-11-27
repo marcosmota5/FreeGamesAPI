@@ -16,7 +16,6 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane fx:id="anpGameDetails" prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.freegamesapi.Controllers.GameDetailsController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="262.0" layoutX="20.0" layoutY="456.0" stroke="#d0d7de" strokeType="INSIDE" width="1251.0" />
@@ -89,12 +88,12 @@
       </Label>
       <Hyperlink fx:id="hlkSource" layoutX="374.0" layoutY="730.0" text="API Source: FreeToGame.com" />
       <Hyperlink fx:id="hlkLinkedIn" layoutX="15.0" layoutY="730.0" text="Created by Marcos Mota" />
-      <Hyperlink fx:id="hlkRepository" layoutX="191.0" layoutY="730.0" text="Repository: FreeGamesAPI" />
+      <Hyperlink fx:id="hlkRepository" layoutX="178.0" layoutY="730.0" text="Repository: FreeGamesExplorer" />
       <Button fx:id="btnBack" layoutX="1163.0" layoutY="23.0" mnemonicParsing="false" onAction="#goBack" prefHeight="36.0" prefWidth="103.0" text="Go back">
          <graphic>
             <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../info.png" />
+                  <Image url="@../../../back.png" />
                </image>
             </ImageView>
          </graphic>
@@ -140,8 +139,8 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="lblOS" layoutX="930.0" layoutY="296.0" prefHeight="16.0" prefWidth="300.0" />
-      <Label fx:id="lblProcessor" layoutX="966.0" layoutY="325.0" prefHeight="16.0" prefWidth="300.0" />
+      <Label fx:id="lblOS" layoutX="930.0" layoutY="296.0" prefHeight="17.0" prefWidth="336.0" />
+      <Label fx:id="lblProcessor" layoutX="966.0" layoutY="325.0" prefHeight="17.0" prefWidth="300.0" />
       <Label fx:id="lblMemory" layoutX="961.0" layoutY="353.0" prefHeight="16.0" prefWidth="300.0" />
       <Label fx:id="lblGraphics" layoutX="961.0" layoutY="382.0" prefHeight="16.0" prefWidth="300.0" />
       <Label fx:id="lblStorage" layoutX="957.0" layoutY="411.0" prefHeight="16.0" prefWidth="300.0" />

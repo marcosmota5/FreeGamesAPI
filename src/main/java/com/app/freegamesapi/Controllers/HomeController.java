@@ -1,6 +1,8 @@
 package com.app.freegamesapi.Controllers;
 
+import com.app.freegamesapi.HelloApplication;
 import com.app.freegamesapi.Helpers.AppPreferences;
+import com.app.freegamesapi.Helpers.StageUtils;
 import com.app.freegamesapi.Helpers.SceneUtils;
 import com.app.freegamesapi.Helpers.ThemeUtils;
 import com.app.freegamesapi.Models.Game;
@@ -36,7 +38,6 @@ import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
 
 import static com.app.freegamesapi.Helpers.LinkUtils.openLink;
 
@@ -123,7 +124,7 @@ public class HomeController {
 
         // Set the actions for hyperlinks
         hlkLinkedIn.setOnAction(event -> openLink("https://linkedin.com/in/marcosmota5"));
-        hlkRepository.setOnAction(event -> openLink("https://github.com/marcosmota5/FreeGamesAPI"));
+        hlkRepository.setOnAction(event -> openLink("https://github.com/marcosmota5/FreeGamesExplorer"));
         hlkSource.setOnAction(event -> openLink("https://www.freetogame.com/"));
 
         // Add a listener to handle selection changes in the ListView
@@ -281,11 +282,15 @@ public class HomeController {
         SceneUtils.switchScene(anpHome, "game-details-view.fxml", selectedGameId);
     }
 
-    private void changeTheme(String theme){
-        if (theme.equals("Dark")) {
-            Application.setUserAgentStylesheet(getClass().getResource("/primer-dark.css").toExternalForm());
-        } else {
-            Application.setUserAgentStylesheet(getClass().getResource("/primer-light.css").toExternalForm());
-        }
+    @FXML
+    void showAbout(ActionEvent event) throws IOException {
+        // Open the Profile Detail window and pass the vehicle data to the controller
+        StageUtils.openModalWindow(
+                "about-view.fxml",
+                HelloApplication.getPrimaryStage(),    // The owner stage (main window)
+                "About",                        // The window title
+                (AboutController controller) -> {  // Lambda expression for the controller
+                }
+        );
     }
 }

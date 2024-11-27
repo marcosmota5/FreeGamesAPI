@@ -24,7 +24,7 @@
             <Image url="@../../../app-icon.png" />
          </image>
       </ImageView>
-      <Label layoutX="60.0" layoutY="19.0" prefHeight="43.0" prefWidth="262.0" text="Free Games API">
+      <Label layoutX="60.0" layoutY="19.0" prefHeight="43.0" prefWidth="262.0" text="Free Games Explorer">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
@@ -80,7 +80,7 @@
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../info.png" />
+                        <Image url="@../../../details.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
@@ -164,12 +164,21 @@
       <Label fx:id="lblFetchingGameList" layoutX="357.0" layoutY="518.0" prefHeight="46.0" prefWidth="119.0" text="Fetching game list, please wait...." textAlignment="CENTER" visible="false" wrapText="true" />
       <Hyperlink fx:id="hlkSource" layoutX="375.0" layoutY="725.0" text="API Source: FreeToGame.com" />
       <Hyperlink fx:id="hlkLinkedIn" layoutX="16.0" layoutY="725.0" text="Created by Marcos Mota" />
-      <Hyperlink fx:id="hlkRepository" layoutX="192.0" layoutY="725.0" text="Repository: FreeGamesAPI" />
+      <Hyperlink fx:id="hlkRepository" layoutX="178.0" layoutY="725.0" text="Repository: FreeGamesExplorer" />
       <Label layoutX="1080.0" layoutY="729.0" text="Theme:">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
       <ComboBox fx:id="cmbTheme" layoutX="1130.0" layoutY="720.0" prefHeight="36.0" prefWidth="136.0" />
+      <Button fx:id="btnDetails1" layoutX="1163.0" layoutY="14.0" mnemonicParsing="false" onAction="#showAbout" prefHeight="36.0" prefWidth="103.0" text="About">
+         <graphic>
+            <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../info.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

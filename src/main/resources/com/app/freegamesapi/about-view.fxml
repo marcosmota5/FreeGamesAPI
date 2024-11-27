@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="458.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.freegamesapi.Controllers.AboutController">
+   <children>
+      <ImageView fitHeight="146.0" fitWidth="148.0" layoutX="526.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../marcos-mota.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="526.0" layoutY="15.0" text="Created by:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="14.0" text="Free Games Explorer">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="14.0" layoutY="47.0" text="This is an app created for an assignment, intended for learning purposes." />
+      <Label layoutX="14.0" layoutY="88.0" text="Assignment detail: COMP1011 - Assignment 2" />
+      <Label layoutX="14.0" layoutY="114.0" text="Created on: 2024/11/26" />
+      <Label layoutX="526.0" layoutY="185.0" prefHeight="27.0" prefWidth="146.0" text="Marcos Oliveira Mota">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="imgLinkedIn" fitHeight="22.0" fitWidth="22.0" layoutX="526.0" layoutY="217.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../linkedin.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="imgGitHub" fitHeight="22.0" fitWidth="22.0" layoutX="588.0" layoutY="217.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../github.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fx:id="imgPortfolio" fitHeight="22.0" fitWidth="22.0" layoutX="650.0" layoutY="217.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../portfolio.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <Label layoutX="14.0" layoutY="179.0" prefHeight="68.0" prefWidth="487.0" text="A big thanks to FreeGamesAPI (freetogame.com) for providing the free API that is used throughout this entire app" wrapText="true" />
+      <Label layoutX="14.0" layoutY="249.0" prefHeight="55.0" prefWidth="660.0" text="Thanks to FlatIcon for providing the free icons that are used in this application. A list containing each icon and the respective creators can be seen below." wrapText="true" />
+      <Hyperlink fx:id="hlkReference1" layoutX="10.0" layoutY="307.0" text="Landscape icons created by mim_studio - Flaticon" />
+      <Hyperlink fx:id="hlkReference2" layoutX="10.0" layoutY="336.0" text="Refresh icons created by Pixel Buddha - Flaticon" />
+      <Hyperlink fx:id="hlkReference3" layoutX="10.0" layoutY="365.0" text="More details icons created by hqrloveq - Flaticon" />
+      <Hyperlink fx:id="hlkReference4" layoutX="10.0" layoutY="394.0" text="Video-game icons created by Freepik - Flaticon" />
+      <Hyperlink fx:id="hlkReference5" layoutX="10.0" layoutY="423.0" text="Back icons created by Roundicons - Flaticon" />
+      <Hyperlink fx:id="hlkReference6" layoutX="349.0" layoutY="307.0" text="Search icons created by srip - Flaticon" />
+      <Hyperlink fx:id="hlkReference7" layoutX="349.0" layoutY="336.0" text="Linkedin icons created by riajulislam - Flaticon" />
+      <Hyperlink fx:id="hlkReference8" layoutX="349.0" layoutY="365.0" text="Github icons created by Pixel perfect - Flaticon" />
+      <Hyperlink fx:id="hlkReference9" layoutX="349.0" layoutY="394.0" text="Portfolio icons created by Freepik - Flaticon" />
+      <Hyperlink fx:id="hlkRepository" layoutX="135.0" layoutY="139.0" text="FreeGamesExplorer" />
+      <Label layoutX="13.0" layoutY="140.0" text="GitHub Repository:" />
+   </children>
+</AnchorPane>

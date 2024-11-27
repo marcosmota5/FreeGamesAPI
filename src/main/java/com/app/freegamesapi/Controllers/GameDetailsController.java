@@ -119,7 +119,7 @@ public class GameDetailsController {
 
         // Set the actions for hyperlinks
         hlkLinkedIn.setOnAction(event -> openLink("https://linkedin.com/in/marcosmota5"));
-        hlkRepository.setOnAction(event -> openLink("https://github.com/marcosmota5/FreeGamesAPI"));
+        hlkRepository.setOnAction(event -> openLink("https://github.com/marcosmota5/FreeGamesExplorer"));
         hlkSource.setOnAction(event -> openLink("https://www.freetogame.com/"));
 
         // Use setOnMouseClicked
@@ -196,8 +196,7 @@ public class GameDetailsController {
             // Update the values from the selected game
             lblTitle.setText(game.getTitle());
             lblDescription.setText("                    " + game.getDescription());
-            Tooltip tooltip = new Tooltip(game.getDescription());
-            lblDescription.setTooltip(tooltip);
+            lblDescription.setTooltip(new Tooltip(game.getDescription()));
             lblGenre.setText(game.getGenre());
             lblPlatform.setText(game.getPlatform());
             lblPublisher.setText(game.getPublisher());
@@ -222,6 +221,7 @@ public class GameDetailsController {
         } else {
             lblTitle.setText("");
             lblDescription.setText("");
+            lblDescription.setTooltip(null);
             lblGenre.setText("");
             lblPlatform.setText("");
             lblPublisher.setText("");
@@ -248,13 +248,26 @@ public class GameDetailsController {
         lblGraphics.setText("");
         lblStorage.setText("");
 
-        // If the requirements are not null, set the values
+        // Clear the tooltips
+        lblOS.setTooltip(null);
+        lblProcessor.setTooltip(null);
+        lblMemory.setTooltip(null);
+        lblGraphics.setTooltip(null);
+        lblStorage.setTooltip(null);
+
+        // If the requirements are not null, set the values and tooltips
         if (requirements != null) {
             lblOS.setText(requirements.getOs());
             lblProcessor.setText(requirements.getProcessor());
             lblMemory.setText(requirements.getMemory());
             lblGraphics.setText(requirements.getGraphics());
             lblStorage.setText(requirements.getStorage());
+
+            lblOS.setTooltip(new Tooltip(requirements.getOs()));
+            lblProcessor.setTooltip(new Tooltip(requirements.getProcessor()));
+            lblMemory.setTooltip(new Tooltip(requirements.getMemory()));
+            lblGraphics.setTooltip(new Tooltip(requirements.getGraphics()));
+            lblStorage.setTooltip(new Tooltip(requirements.getStorage()));
         }
     }
 
@@ -298,6 +311,7 @@ public class GameDetailsController {
         ImageView thumbnail = new ImageView(new Image(url));
         thumbnail.setPreserveRatio(true);
         thumbnail.setFitHeight(225); // Set thumbnail height
+        Tooltip.install(thumbnail, new Tooltip("Click on the image to expand")); // Attach a tooltip
 
         // Change the cursor to a hand and add a border on hover
         thumbnail.setOnMouseEntered(event -> {
