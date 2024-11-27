@@ -8,6 +8,7 @@ module com.app.freegamesapi {
     requires org.kordamp.bootstrapfx.core;
     requires com.google.gson;
     requires java.net.http;
+    requires java.desktop;
 
     opens com.app.freegamesapi to javafx.fxml;
     exports com.app.freegamesapi;

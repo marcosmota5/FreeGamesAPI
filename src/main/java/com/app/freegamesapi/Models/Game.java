@@ -255,7 +255,7 @@ public class Game {
                                 gameObject.get("platform").getAsString(),
                                 gameObject.get("publisher").getAsString(),
                                 gameObject.get("developer").getAsString(),
-                                LocalDate.parse(gameObject.get("release_date").getAsString()),
+                                LocalDate.parse(gameObject.get("release_date").getAsString().replace("00", "01")),
                                 gameObject.get("freetogame_profile_url").getAsString(),
                                 List.of(systemRequirement),
                                 screenshots
@@ -265,5 +265,109 @@ public class Game {
                         throw new ApiCallFailedException("Failed to parse Game object", e);
                     }
                 });
+    }
+
+    public static CompletableFuture<List<Game>> getGameList(List<String> categories, String platform, String sortBy, String searchTitle) throws ApiCallFailedException {
+        // Create an HttpClient object
+        HttpClient client = HttpClient.newHttpClient();
+
+        // Build the base URL
+        String baseUrl;
+
+        if (categories == null || categories.isEmpty()) {
+            baseUrl = "https://www.freetogame.com/api/games";
+        } else {
+            String tags = categories.stream()
+                    .map(category -> category.toLowerCase().replace(" ", "-"))
+                    .reduce((tag1, tag2) -> tag1 + "." + tag2)
+                    .orElse("");
+            baseUrl = "https://www.freetogame.com/api/filter?tag=" + tags;
+        }
+
+        // Append platform and sortBy parameters if they are not empty
+        if (!platform.isEmpty()) {
+            // If the base url is the base one, add a question mark for the platform, otherwise add a &
+            if (baseUrl.endsWith("/api/games")) {
+                baseUrl += "?";
+            }
+            else {
+                baseUrl += "&";
+            }
+
+            // Concatenate the platform
+            baseUrl += "platform=" + platform.toLowerCase().replace(" ", "-");
+        }
+        if (!sortBy.isEmpty()) {
+            // If the base url is the base one, add a question mark for the platform, otherwise add a &
+            if (baseUrl.endsWith("/api/games")) {
+                baseUrl += "?";
+            }
+            else {
+                baseUrl += "&";
+            }
+
+            // Concatenate the sort by
+            baseUrl += "&sort-by=" + sortBy.toLowerCase().replace(" ", "-");
+        }
+
+        // Create the GET request
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(baseUrl))
+                .build();
+
+        // Send the request asynchronously
+        return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                .thenApply(HttpResponse::body)
+                .thenApply(response -> {
+                    try {
+                        // Parse the JSON response
+                        JsonArray gameArray = JsonParser.parseString(response).getAsJsonArray();
+
+                        // Extract the list of Game objects
+                        List<Game> games = new ArrayList<>();
+                        for (JsonElement element : gameArray) {
+                            // Get a game object form the json
+                            JsonObject gameObject = element.getAsJsonObject();
+
+                            // Create a game variable
+                            Game game = new Game(
+                                    gameObject.get("id").getAsInt(),
+                                    gameObject.get("title").getAsString(),
+                                    gameObject.get("thumbnail").getAsString(),
+                                    gameObject.get("short_description").getAsString(),
+                                    gameObject.get("game_url").getAsString(),
+                                    gameObject.get("genre").getAsString(),
+                                    gameObject.get("platform").getAsString(),
+                                    gameObject.get("publisher").getAsString(),
+                                    gameObject.get("developer").getAsString(),
+                                    LocalDate.parse(gameObject.get("release_date").getAsString().replace("00", "01")),
+                                    gameObject.get("freetogame_profile_url").getAsString()
+                            );
+
+                            // Add the game to the games list
+                            games.add(game);
+                        }
+
+                        // Filter games by searchTitle (case-insensitive)
+                        if (searchTitle != null && !searchTitle.trim().isEmpty()) {
+                            String trimmedSearchTitle = searchTitle.trim(); // Remove extra spaces
+                            games = games.stream()
+                                    .filter(game -> game.getTitle().toLowerCase().contains(trimmedSearchTitle.toLowerCase()))
+                                    .toList();
+                        }
+
+                        // Return the games list
+                        return games;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        throw new ApiCallFailedException("Failed to parse game list", e);
+                    }
+                });
+    }
+
+    @Override
+    public String toString() {
+        // Display the title information in the ListView
+        return title;
     }
 }
