@@ -12,14 +12,14 @@ This is a repository of a JavaFX application created for an assignment, intended
 
 ## Description
 
-Free Games Explorer is a Desktop app that enables users to explore many free games available in multiple platforms. The user has the option to see a list of games, filter with some criteria like category, platform or name, and see details and screenshots.
+Free Games Explorer is a Java Desktop app that enables users to explore many free games available in multiple platforms. The user has the option to see a list of games, filter with some criteria like category, platform or name, and see details and screenshots.
 
 ## Screenshots
 
 ### Home page (Light theme)
 ![Home page (Light theme)](./screenshots/home_page_light.png)
 
-### Dark theme (Dark theme)
+### Home page (Dark theme)
 ![Home page (Dark theme)](./screenshots/home_page_dark.png)
 
 ### Game details page
