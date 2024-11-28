@@ -15,13 +15,19 @@ public class AppPreferences {
         preferences.put(PREF_KEY_THEME, theme);
     }
 
-    // Static method to load login and "Remember Me" state
+    /**
+     * Load the saved preferences.
+     *
+     * @return An array of String with the preferences.
+     */
     public static String[] loadPreferences() {
         String savedTheme = preferences.get(PREF_KEY_THEME, "");
         return new String[] { savedTheme };
     }
 
-    // Static method to clear the saved preferences
+    /**
+     * Clear the saved preferences
+     */
     public static void clearPreferences() {
         preferences.remove(PREF_KEY_THEME);
     }

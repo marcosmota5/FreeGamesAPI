@@ -29,7 +29,7 @@ public class StageUtils {
         // Get the controller for the new view
         T controller = fxmlLoader.getController();
 
-        // Call the method on the controller (e.g., passing data)
+        // Call the method on the controller
         controllerMethodCall.call(controller);
 
         // Create a new Stage (window)

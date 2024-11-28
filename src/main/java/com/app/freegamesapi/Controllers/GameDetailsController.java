@@ -114,6 +114,9 @@ public class GameDetailsController {
 
     private int gameId;
 
+    /**
+     * Run when the controller is initialized
+     */
     @FXML
     public void initialize() {
 
@@ -147,6 +150,11 @@ public class GameDetailsController {
         });
     }
 
+    /**
+     * Get and display the game data
+     *
+     * @param event An event that can be handled in the function
+     */
     @FXML
     void getGame(ActionEvent event) {
 
@@ -190,6 +198,12 @@ public class GameDetailsController {
                 });
     }
 
+    /**
+     * Set the game information in each one of the visual controls
+     *
+     * @param game An instance of Game that will be used to get the information. If game is null, the values will be
+     *             set to empty
+     */
     private void setGameData(Game game) {
         // If the game is not null, set the values
         if (game != null) {
@@ -239,6 +253,12 @@ public class GameDetailsController {
         }
     }
 
+    /**
+     * Set the system requirements information
+     *
+     * @param requirements An instance of SystemRequirements that will be used to get the information.
+     *             If systemRequirements is null, the values will be set to empty
+     */
     private void setSystemRequirements(SystemRequirements requirements) {
 
         // Clear the values
@@ -271,13 +291,24 @@ public class GameDetailsController {
         }
     }
 
+    /**
+     * Set the game id property. This game id will be used to get the game info from the API
+     *
+     * @param gameId An int that represents the id of the game
+     */
     public void setGameId(int gameId) {
         // Set the current user property
         this.gameId = gameId;
 
+        // Call the method to get the game
         getGame(null);
     }
 
+    /**
+     * Go back to the Home page
+     *
+     * @param event An event that can be handled in the function
+     */
     @FXML
     void goBack(ActionEvent event) throws IOException {
         // Get the stage from anchor
@@ -287,11 +318,18 @@ public class GameDetailsController {
         SceneUtils.switchScene(anpGameDetails, "home-view.fxml");
     }
 
+    /**
+     * Set the screenshots thumbnail list
+     *
+     * @param screenshotUrls A list of string that contains each one of the image url
+     */
     public void setScreenshots(List<String> screenshotUrls) {
-        hbxImages.getChildren().clear(); // Clear any existing thumbnails
+        // Clear any existing thumbnails
+        hbxImages.getChildren().clear();
 
+        // If the list is null or empty, just the enlarged image to null
         if (screenshotUrls == null || screenshotUrls.isEmpty()) {
-            imgEnlarged.setImage(null); // No images to display
+            imgEnlarged.setImage(null);
             return;
         }
 
@@ -306,35 +344,57 @@ public class GameDetailsController {
         }
     }
 
+    /**
+     * Create a thumbnail and return a StackPane to be added in a container
+     *
+     * @param url The url of the image to be created and added to the StackPane
+     * @return A stack pane containing the image thumbnail
+     */
     private StackPane createThumbnail(String url) {
         // Create an ImageView for the thumbnail
         ImageView thumbnail = new ImageView(new Image(url));
-        thumbnail.setPreserveRatio(true);
-        thumbnail.setFitHeight(225); // Set thumbnail height
-        Tooltip.install(thumbnail, new Tooltip("Click on the image to expand")); // Attach a tooltip
 
-        // Change the cursor to a hand and add a border on hover
+        // Set to preserve the ratio
+        thumbnail.setPreserveRatio(true);
+
+        // Set the height of the image
+        thumbnail.setFitHeight(225);
+
+        // Attach a tooltip to the image so the user knows that they can click to expand it
+        Tooltip.install(thumbnail, new Tooltip("Click on the image to expand"));
+
+        // Change the cursor to a hand, add a border and increase the image on hover
         thumbnail.setOnMouseEntered(event -> {
             thumbnail.setStyle("-fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgb(0,118,184), 10, 0.5, 0, 0);");
-            thumbnail.setFitHeight(230); // Increase height on hover
+            thumbnail.setFitHeight(230);
         });
 
         // Reset style and height when hover ends
         thumbnail.setOnMouseExited(event -> {
-            thumbnail.setStyle(""); // Reset border
-            thumbnail.setFitHeight(225); // Reset height
+            // Reset border
+            thumbnail.setStyle("");
+
+            // Reset height
+            thumbnail.setFitHeight(225);
         });
 
         // Set click action to update the enlarged image and show the enlarged pane
         thumbnail.setOnMouseClicked(event -> {
+            // Create the image element
             Image clickedImage = new Image(url);
-            imgEnlarged.setImage(clickedImage); // Update the enlarged image
+
+            // Update the enlarged image
+            imgEnlarged.setImage(clickedImage);
+
+            // Set the visibility of the enlarged pane
             pneEnlarged.setVisible(true);
         });
 
         // Wrap the ImageView in a StackPane and add margins
         StackPane wrapper = new StackPane(thumbnail);
-        StackPane.setMargin(thumbnail, new Insets(10, 7, 10, 7)); // Add 10px margins around the thumbnail
+
+        // Add some margin to the image/StackPane
+        StackPane.setMargin(thumbnail, new Insets(10, 7, 10, 7));
 
         // Ensure the StackPane background is transparent
         wrapper.setStyle("-fx-background-color: transparent;");
@@ -342,5 +402,4 @@ public class GameDetailsController {
         // Return the StackPane
         return wrapper;
     }
-
 }

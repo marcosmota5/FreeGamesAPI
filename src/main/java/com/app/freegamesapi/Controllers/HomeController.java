@@ -26,6 +26,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.controlsfx.control.CheckComboBox;
@@ -101,6 +102,9 @@ public class HomeController {
     private Label lblReleaseDate;
 
     @FXML
+    private Label lblGamesCount;
+
+    @FXML
     private ListView<Game> lsvGames;
 
     @FXML
@@ -114,6 +118,9 @@ public class HomeController {
 
     private int selectedGameId;
 
+    /**
+     * Run when the controller is initialized
+     */
     @FXML
     public void initialize() {
         // Call the method to populate the lists
@@ -133,7 +140,7 @@ public class HomeController {
                 // Update the values from the selected game
                 selectedGameId = newValue.getId();
                 lblTitle.setText(newValue.getTitle());
-                lblDescription.setText("                           " + newValue.getShortDescription());
+                lblDescription.setText("                           " + newValue.getShortDescription()); // Extra spaces added to have enough space for the "description" title
                 lblGenre.setText(newValue.getGenre());
                 lblPlatform.setText(newValue.getPlatform());
                 lblPublisher.setText(newValue.getPublisher());
@@ -143,25 +150,30 @@ public class HomeController {
 
                 // Format the release date using the system's current locale
                 DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT).withLocale(Locale.getDefault());
+
+                // Create a formatted date string
                 String formattedDate = newValue.getReleaseDate().format(formatter);
 
+                // Set the formated date string to the label
                 lblReleaseDate.setText(formattedDate);
 
+                // Create an image element with the thumbnail url
                 Image newImage = new Image(newValue.getThumbnail());
 
+                // Set teh image of the thumbnail
                 imgThumbnail.setImage(newImage);
 
                 // Enable the details button
                 btnDetails.setDisable(false);
             } else {
                 selectedGameId = 0;
-                lblTitle.setText(""); // Clear the label if no selection is made
-                lblDescription.setText(""); // Clear the label if no selection is made
-                lblGenre.setText(""); // Clear the label if no selection is made
-                lblPlatform.setText(""); // Clear the label if no selection is made
-                lblPublisher.setText(""); // Clear the label if no selection is made
-                lblDeveloper.setText(""); // Clear the label if no selection is made
-                lblReleaseDate.setText(""); // Clear the label if no selection is made
+                lblTitle.setText("");
+                lblDescription.setText("");
+                lblGenre.setText("");
+                lblPlatform.setText("");
+                lblPublisher.setText("");
+                lblDeveloper.setText("");
+                lblReleaseDate.setText("");
                 hlkGameUrl.setText("");
                 hlkGameUrl.setOnAction(null); // Removes the event handler
 
@@ -192,8 +204,20 @@ public class HomeController {
                 ThemeUtils.changeTheme(this, newValue); // Call the changeTheme method with the selected value
             }
         });
+
+        // Add a key press event listener to the txtName field
+        txtName.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                refreshList(null); // Call refreshList when Enter is pressed
+            }
+        });
     }
 
+    /**
+     * Refresh the list of games
+     *
+     * @param event An event that can be handled in the function
+     */
     @FXML
     void refreshList(ActionEvent event) {
 
@@ -213,6 +237,8 @@ public class HomeController {
 
         // Show progress and disable buttons immediately
         Platform.runLater(() -> {
+            lblGamesCount.setText("Games count: 0");
+
             pgiFetchingGameList.setVisible(true);
             lblFetchingGameList.setVisible(true);
 
@@ -229,6 +255,9 @@ public class HomeController {
                         // Populate the ListView with the game list
                         lsvGames.getItems().setAll(games);
 
+                        // Set the games count
+                        lblGamesCount.setText("Games count: " + games.size());
+
                         // Make the progress invisible
                         pgiFetchingGameList.setVisible(false);
                         lblFetchingGameList.setVisible(false);
@@ -242,6 +271,7 @@ public class HomeController {
                     // Handle exceptions
                     Platform.runLater(() -> {
                         System.err.println("Error fetching game list: " + ex.getMessage());
+                        lblGamesCount.setText("Games count: 0");
 
                         // Make the progress invisible and re-enable buttons
                         pgiFetchingGameList.setVisible(false);
@@ -254,20 +284,27 @@ public class HomeController {
                 });
     }
 
+    /**
+     * Populate the lists used in the ComboBoxes
+     */
     private void populateLists() {
         // Create the lists
         ObservableList<String> categoryList = FXCollections.observableArrayList("2D", "3D", "Action", "Action RPG", "Anime", "Battle Royale", "Card", "Fantasy", "Fighting", "First Person", "Flight", "Horror", "Low Spec", "Martial Arts", "Military", "MMO", "MMOFPS", "MMORPG", "MMORTS", "MMOTPS", "Moba", "Open World", "Permadeath", "Pixel", "PVE", "PVP", "Racing", "Sailing", "Sandbox", "Sci Fi", "Shooter", "Side Scroller", "Social", "Space", "Sports", "Strategy", "Superhero", "Survival", "Tank", "Third Person", "Top Down", "Tower Defense", "Turn Based", "Voxel", "Zombie");
         ObservableList<String> platformList = FXCollections.observableArrayList("", "Browser", "PC");
         ObservableList<String> sortByList = FXCollections.observableArrayList("", "Alphabetical", "Release Date");
-        ObservableList<String> themeList = FXCollections.observableArrayList("Light", "Dark");
 
         // Set the lists
         ccbCategory.getItems().addAll(categoryList);
         cmbPlatform.setItems(platformList);
         cmbSortBy.setItems(sortByList);
-        cmbTheme.setItems(themeList);
+        cmbTheme.setItems(ThemeUtils.getThemes());
     }
 
+    /**
+     * Go to the details page
+     *
+     * @param event An event that can be handled in the function
+     */
     @FXML
     void goToDetails(ActionEvent event) throws IOException {
         // If the selected game id is 0, return as there's no game to check
@@ -282,6 +319,11 @@ public class HomeController {
         SceneUtils.switchScene(anpHome, "game-details-view.fxml", selectedGameId);
     }
 
+    /**
+     * Open a modal window with the about
+     *
+     * @param event An event that can be handled in the function
+     */
     @FXML
     void showAbout(ActionEvent event) throws IOException {
         // Open the Profile Detail window and pass the vehicle data to the controller

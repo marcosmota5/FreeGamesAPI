@@ -5,6 +5,8 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 
+import java.io.IOException;
+
 import static com.app.freegamesapi.Helpers.LinkUtils.openLink;
 
 public class AboutController {
@@ -48,6 +50,9 @@ public class AboutController {
     @FXML
     private ImageView imgPortfolio;
 
+    /**
+     * Run when the controller is initialized
+     */
     @FXML
     public void initialize() {
         // Set the actions for hyperlinks

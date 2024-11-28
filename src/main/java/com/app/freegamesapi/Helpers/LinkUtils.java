@@ -4,6 +4,12 @@ import java.awt.*;
 import java.net.URI;
 
 public class LinkUtils {
+
+    /**
+     * Open a link using the default browser of the system.
+     *
+     * @param url The url to be opened.
+     */
     public static void openLink(String url) {
         try {
             // Check if Desktop is supported

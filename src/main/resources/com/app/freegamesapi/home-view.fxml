@@ -180,5 +180,10 @@
             </ImageView>
          </graphic>
       </Button>
+      <Label fx:id="lblGamesCount" alignment="CENTER_RIGHT" layoutX="707.0" layoutY="712.0" prefHeight="17.0" prefWidth="129.0" text="Games count: 0" textAlignment="RIGHT">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

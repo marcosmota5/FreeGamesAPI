@@ -190,11 +190,20 @@ public class Game {
         return screenshots;
     }
 
+
     public void setScreenshots(List<String> screenshots) {
         this.screenshots = screenshots;
     }
 
     // Methods
+
+    /**
+     * Get a game from the API by its id.
+     *
+     * @param id The id of the game to be returned.
+     * @return A CompletableFuture containing the game.
+     * @throws ApiCallFailedException If the API fails to return something for any reason.
+     */
     public static CompletableFuture<Game> getGameById(int id) throws ApiCallFailedException {
         // Create an HttpClient object
         HttpClient client = HttpClient.newHttpClient();
@@ -267,6 +276,16 @@ public class Game {
                 });
     }
 
+    /**
+     * Get a list of games from the API by some criteria.
+     *
+     * @param categories A list of string containing the categories to be filtered as tags.
+     * @param platform The platform to be filtered.
+     * @param sortBy The sort by criteria.
+     * @param searchTitle A text to be searched with 'contains' logic using the title property.
+     * @return A CompletableFuture containing the list of games.
+     * @throws ApiCallFailedException If the API fails to return something for any reason.
+     */
     public static CompletableFuture<List<Game>> getGameList(List<String> categories, String platform, String sortBy, String searchTitle) throws ApiCallFailedException {
         // Create an HttpClient object
         HttpClient client = HttpClient.newHttpClient();
